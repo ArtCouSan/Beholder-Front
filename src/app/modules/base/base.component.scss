@@ -1,0 +1,31 @@
+.mat-sidenav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    background-color: #1E2B38;
+}
+
+.mat-sidenav-content {
+    padding: 0;
+    margin: 0; 
+    height: 100%; 
+}
+
+.mat-sidenav-container {
+    height: 100%;
+}
+
+
+mat-nav-list {
+    --mdc-list-list-item-label-text-color: white !important;
+    --mdc-list-list-item-hover-label-text-color: #F0B91B !important;
+}
+
+mat-toolbar {
+    --mat-toolbar-container-background-color: #F0B91B !important;
+}
+
+.mdc-list-item:hover .mdc-list-item__primary-text {
+    --mdc-list-list-item-hover-label-text-color: #F0B91B !important;
+}
