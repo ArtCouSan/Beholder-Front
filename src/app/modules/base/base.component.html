@@ -1,0 +1,31 @@
+<mat-toolbar class="mat-toolbar">
+  <button mat-icon-button (click)="snav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container
+  class="mat-sidenav-container"
+  [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
+>
+  <mat-sidenav
+    class="mat-sidenav"
+    #snav
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [fixedInViewport]="mobileQuery.matches"
+    fixedTopGap="56"
+  >
+    <mat-nav-list>
+      <mat-list-item class="mat-list-item" (click)="mostrarComponente(componentHome)">Home</mat-list-item>
+      <a mat-list-item (click)="mostrarComponente(componentDetectEpiPlus)">AI Detect EPI Plus</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="mat-sidenav-content">
+    <ng-container *ngIf="!conteudoDinamico">
+      <app-home></app-home>
+    </ng-container>
+    <ng-container *ngIf="conteudoDinamico">
+      <ng-template [ngComponentOutlet]="conteudoDinamico"></ng-template>
+    </ng-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>
