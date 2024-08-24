@@ -29,3 +29,8 @@ mat-toolbar {
 .mdc-list-item:hover .mdc-list-item__primary-text {
     --mdc-list-list-item-hover-label-text-color: #F0B91B !important;
 }
+
+::ng-deep mat-sidenav-content::-webkit-scrollbar {
+    display: none;
+  }
+  

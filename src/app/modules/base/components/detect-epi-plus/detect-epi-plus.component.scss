@@ -1,0 +1,43 @@
+.dashboard {
+    margin: 30px 30px 60px 30px;
+    width: 95%;
+}
+
+::ng-deep  mat-card {
+    height: 100%;
+    width: 100%;  
+}
+  
+
+  img {
+    width: 100%;  /* Faz com que a imagem ocupe toda a largura do mat-card */
+    height: 100%; /* Faz com que a imagem ocupe toda a altura do mat-card */
+    object-fit: cover; /* Garante que a imagem preencha o quadro sem distorcer */
+  }
+  
+::ng-deep mat-card-content {
+    padding: 0; /* Remove qualquer padding extra que possa estar afetando o vídeo */
+}
+
+.video-container {
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0; /* Cor de fundo padrão */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-url {
+    background-color: #cccccc; /* Fundo cinza quando não há URL */
+}
+
+.video-frame {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ajusta o vídeo ao tamanho do contêiner sem cortar */
+}
+  
+  .mat-grid-tile {
+    width: 200px;
+  }

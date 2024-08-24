@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detect-epi-plus',
@@ -9,53 +8,31 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 })
 export class DetectEpiPlusComponent implements OnInit, OnDestroy {
 
-  private videoUrl = 'http://localhost:5000/video_feed';
-  videoSafeUrl: SafeUrl | undefined;
-  private videoBlobUrl: string | undefined;
-  private videoInterval: any;
+  cameraUrls: { name: string, url: string, safeUrl: SafeResourceUrl }[] = [
+    { name: 'Camera 1', url: 'http://localhost:5000/video_feed', safeUrl: 'http://localhost:5000/video_feed' },
+    { name: 'Camera 2', url: '', safeUrl: '' },
+    { name: 'Camera 3', url: '', safeUrl: '' },
+    // Adicione mais câmeras conforme necessário
+  ];
 
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
+  @ViewChildren('videoElement') videoElements!: QueryList<HTMLVideoElement>;
+
+  constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.loadVideo();
+    this.cameraUrls = this.cameraUrls.map(url => ({
+      ...url,
+      safeUrl: url.safeUrl
+    }));
   }
 
   ngOnDestroy(): void {
-    if (this.videoInterval) {
-      clearInterval(this.videoInterval);
-    }
-    if (this.videoBlobUrl) {
-      window.URL.revokeObjectURL(this.videoBlobUrl);
-    }
+    this.stopAllVideos();
   }
 
-  loadVideo() {
-    this.http.get(this.videoUrl, { responseType: 'blob' }).subscribe(
-      response => {
-        this.videoBlobUrl = window.URL.createObjectURL(response);
-        this.videoSafeUrl = this.sanitizer.bypassSecurityTrustUrl(this.videoBlobUrl);
-        this.startVideoStreaming();
-      },
-      error => {
-        console.error('Error loading video:', error);
-      }
-    );
-  }
-
-  startVideoStreaming() {
-    this.videoInterval = setInterval(() => {
-      this.http.get(this.videoUrl, { responseType: 'blob' }).subscribe(
-        response => {
-          if (this.videoBlobUrl) {
-            window.URL.revokeObjectURL(this.videoBlobUrl);
-          }
-          this.videoBlobUrl = window.URL.createObjectURL(response);
-          this.videoSafeUrl = this.sanitizer.bypassSecurityTrustUrl(this.videoBlobUrl);
-        },
-        error => {
-          console.error('Error streaming video:', error);
-        }
-      );
-    }, 1000); // Adjust the interval according to your needs
+  stopAllVideos(): void {
+    this.videoElements.forEach(video => {
+      video.src = '';  // Limpa a fonte do vídeo para parar o feed
+    });
   }
 }
