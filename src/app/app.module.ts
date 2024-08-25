@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app.routes.modules';
 import { SharedModule } from './modules/shared/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { SharedModule } from './modules/shared/shared.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    FontAwesomeModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

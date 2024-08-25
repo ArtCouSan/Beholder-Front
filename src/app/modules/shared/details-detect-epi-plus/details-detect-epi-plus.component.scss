@@ -1,0 +1,47 @@
+.dashboard {
+    margin: 30px 30px 60px 30px;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    width: 100%;  /* Faz com que a imagem ocupe toda a largura do mat-card */
+    height: 100%; /* Faz com que a imagem ocupe toda a altura do mat-card */
+    object-fit: cover; /* Garante que a imagem preencha o quadro sem distorcer */
+  }
+  
+.video-frame {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ajusta o vídeo ao tamanho do contêiner sem cortar */
+}
+
+.container-image {
+    background-color: #f0f0f0;
+    width: 100%;
+    height: 530px;
+    overflow: hidden;
+}
+
+.fa-icone {
+    color: #1E2B38;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 41px;
+}
+
+.fa-icone:hover {
+    color: #F0B91B;
+}
+
+.i-sair {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+
+::ng-deep mat-tab-group {
+    width: 86% !important;
+}
