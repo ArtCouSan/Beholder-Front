@@ -1,15 +1,29 @@
-<div class="dashboard">
-    <mat-grid-list cols="2" rowHeight="2:1" gutterSize="10px">
-        <mat-grid-tile *ngFor="let cameraUrl of cameraUrls">
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>{{ cameraUrl.name }}</mat-card-title>
+<div *ngIf="cameraDetalhes === null; else editTemplate" class="dashboard">
+    <mat-grid-list cols="2" rowHeight="2:1" gutterSize="20px">
+        <mat-grid-tile *ngFor="let camera of cameraUrls">
+            <mat-card 
+            (mouseenter)="setHovering(camera, true)"
+            (mouseleave)="setHovering(camera, false)">
+                <mat-card-header [class.header-hover]="camera.hovering" [class.header-default]="!camera.hovering" class="header">
+                    <mat-card-title>{{ camera.name }}</mat-card-title>
                 </mat-card-header>
-                <mat-card-content class="video-container" 
-                    [ngClass]="{ 'no-url': cameraUrl.safeUrl == '' }">
-                    <img #videoElement *ngIf="cameraUrl.safeUrl" [src]="cameraUrl.safeUrl" alt="{{ cameraUrl.name }}" class="video-frame">
+                <mat-card-content *ngIf="!(camera.safeUrl == '')" class="video-container cursor-on" 
+                    [ngClass]="{ 'no-url': camera.safeUrl == '' }">
+                    <img #videoElement (click)="detalhesCamera(camera)" *ngIf="camera.safeUrl" [src]="camera.safeUrl" alt="{{ camera.name }}" class="video-frame">
+                </mat-card-content>
+                <mat-card-content *ngIf="camera.safeUrl == ''" class="video-container cursor-off" 
+                    [ngClass]="{ 'no-url': camera.safeUrl == '' }">
+                    <fa-icon  [class.fa-icone-hover]="camera.hovering" [class.fa-icone-default]="!camera.hovering"  class="fa-icone i-sair" icon="ellipsis"></fa-icon>
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>
     </mat-grid-list>
 </div>
+
+<ng-template #editTemplate>
+    <app-details-detect-epi-plus
+      *ngIf="cameraDetalhes"
+      [cameraDetalhes]="cameraDetalhes" 
+      (voltar)="voltar()">
+    </app-details-detect-epi-plus>
+</ng-template>

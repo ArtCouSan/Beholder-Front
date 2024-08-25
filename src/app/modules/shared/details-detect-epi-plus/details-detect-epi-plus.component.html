@@ -1,0 +1,15 @@
+<div class="dashboard">
+    <mat-tab-group animationDuration="2000ms"  headerPosition="below">
+        <mat-tab label="Camera">
+            <div class="container-image">
+                <fa-icon class="fa-icone i-sair" icon="angle-left" (click)="onVoltar()"></fa-icon>
+                <img #videoElement [src]="cameraDetalhes.safeUrl" alt="{{ cameraDetalhes.name }}" class="video-frame">
+            </div>
+        </mat-tab>
+        <mat-tab label="Galeria">
+            <div class="container-image">
+                <fa-icon class="fa-icone i-sair" icon="angle-left" (click)="onVoltar()"></fa-icon>
+            </div>
+        </mat-tab>
+      </mat-tab-group>
+</div>
