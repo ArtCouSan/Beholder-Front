@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Camera } from '../../../../core/camera.dto';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
@@ -23,7 +23,8 @@ export class DetectEpiPlusComponent implements OnInit, OnDestroy {
 
   @ViewChildren('videoElement') videoElements!: QueryList<HTMLVideoElement>;
 
-  constructor(private sanitizer: DomSanitizer,
+  constructor(
+    private sanitizer: DomSanitizer,
     library: FaIconLibrary
   ) {
     library.addIcons(faEllipsis);
@@ -47,12 +48,11 @@ export class DetectEpiPlusComponent implements OnInit, OnDestroy {
   }
 
   detalhesCamera(camera: Camera): void {
-    this.cameraDetalhes = { ...camera };
+    this.cameraDetalhes = { ...camera };  // Define a câmera selecionada para passar ao filho
   }
 
-  
   voltar(): void {
-    this.cameraDetalhes = null;
+    this.cameraDetalhes = null;  // Reseta a seleção da câmera quando o filho emite o evento de "voltar"
   }
 
   setHovering(camera: any, isHovering: boolean) {

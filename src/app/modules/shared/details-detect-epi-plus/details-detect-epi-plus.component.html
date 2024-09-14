@@ -1,15 +1,41 @@
 <div class="dashboard">
-    <mat-tab-group animationDuration="2000ms"  headerPosition="below">
+    <mat-tab-group animationDuration="2000ms" headerPosition="below">
+        <!-- Tab da Câmera -->
         <mat-tab label="Camera">
             <div class="container-image">
                 <fa-icon class="fa-icone i-sair" icon="angle-left" (click)="onVoltar()"></fa-icon>
-                <img #videoElement [src]="cameraDetalhes.safeUrl" alt="{{ cameraDetalhes.name }}" class="video-frame">
+                <div class="container">
+                    <div class="container-video">
+                        <img #videoElement [src]="cameraDetalhes.safeUrl" alt="{{ cameraDetalhes.name }}" class="video-frame">
+                    </div>
+                    <div class="container-detections">
+                        <ul>
+                            <li *ngFor="let detection of detections">
+                                Identificado: {{ detection.class }}, Confiança: {{ detection.confidence }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </mat-tab>
+
+        <!-- Tab da Galeria -->
         <mat-tab label="Galeria">
             <div class="container-image">
                 <fa-icon class="fa-icone i-sair" icon="angle-left" (click)="onVoltar()"></fa-icon>
+                <div class="gallery-grid-container">
+                    <div class="gallery-grid">
+                        <mat-card *ngFor="let image of savedImages" class="gallery-item">
+                            <img [src]="'data:image/jpeg;base64,' + image.image" alt="Imagem salva" class="gallery-image">
+                            <mat-card-content>
+                                <p>Detectado: {{ image.detections[0]?.class }}</p>
+                                <p>Confiança: {{ (image.detections[0]?.confidence) * 100 }}%</p>
+                                <p>{{ image.timestamp | date:'short' }}</p>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>                
             </div>
         </mat-tab>
-      </mat-tab-group>
+    </mat-tab-group>
 </div>
