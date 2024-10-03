@@ -17,6 +17,7 @@ export class DetailsDetectEpiPlusComponent implements OnInit, OnDestroy {
   detections: any[] = [];  // Para armazenar os resultados das detecções
   detectionInterval: any;  // Variável para armazenar o intervalo
   savedImages: any[] = [];  // Para armazenar as imagens salvas
+  imageInterval: any;  // Novo intervalo para imagens
 
   constructor(
     private detectEpiService: DetectEpiService,  // Injeta o serviço de detecção
@@ -38,11 +39,22 @@ export class DetailsDetectEpiPlusComponent implements OnInit, OnDestroy {
       );
     }, 2000); // Atualiza a cada 2 segundos
 
-    // Carrega as imagens salvas para a galeria
+    // Atualizar as imagens salvas a cada 2 segundos
+    this.imageInterval = setInterval(() => {
+      this.detectEpiService.getSavedImages().subscribe(
+        (data) => {
+          this.savedImages = data;
+        },
+        (error) => {
+          console.error('Erro ao buscar imagens salvas', error);
+        }
+      );
+    }, 2000); // Intervalo de 2 segundos
+
+    // Carregar as imagens salvas ao iniciar
     this.detectEpiService.getSavedImages().subscribe(
       (data) => {
-        this.savedImages = data;  // Armazena as imagens salvas no array savedImages
-        console.log(this.savedImages);  // Exibe no console para debug
+        this.savedImages = data;
       },
       (error) => {
         console.error('Erro ao buscar imagens salvas', error);
@@ -51,12 +63,14 @@ export class DetailsDetectEpiPlusComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Para o intervalo quando o componente é destruído
+    // Para os intervalos quando o componente é destruído
     if (this.detectionInterval) {
       clearInterval(this.detectionInterval);
     }
+    if (this.imageInterval) {
+      clearInterval(this.imageInterval); // Limpar o intervalo das imagens
+    }
   }
-
   onVoltar() {
     this.voltar.emit();
   }
